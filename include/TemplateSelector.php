@@ -27,11 +27,16 @@ abstract class TemplateSelector
         return $options[$name];
     }
     
-    private static function _getOptions()
+    private static function _getConfFile()
     {
-    	if(count(self::$_options) === 0)
+    	return dirname(__FILE__) . DIRECTORY_SEPARATOR . 'suggestions.conf';
+    }
+    
+    private static function _getOptions($reload = false)
+    {
+    	if(count(self::$_options) === 0 || $reload === true)
     	{
-    		$confFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'suggestions.conf';
+    		$confFile = self::_getConfFile();
 	    	if(file_exists($confFile))
 	    	{
 	    		$array = array();
@@ -47,5 +52,15 @@ abstract class TemplateSelector
 	    	}
     	}
     	return self::$_options;
+    }
+    
+    public function writeToConfiFile($data)
+    {
+    	file_put_contents(self::_getConfFile(), $data);
+    	return self::_getOptions(true);
+    }
+    public function getConfiFile()
+    {
+    	return file_get_contents(self::_getConfFile(), $data);
     }
 }
