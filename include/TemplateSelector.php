@@ -1,6 +1,8 @@
 <?php
 abstract class TemplateSelector
 {
+	private static $_options = array();
+	
     public static function genSelectDiv($selectedKey = '')
     {
         $selectedKey = (trim($selectedKey) === '' ? '' : trim($selectedKey));
@@ -27,18 +29,23 @@ abstract class TemplateSelector
     
     private static function _getOptions()
     {
-    	$confFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'suggestions.conf';
-    	if(!file_exists($confFile))
-    		return array();
-    	$array = array();
-    	$lines = file($confFile);
-    	foreach($lines as $lineNo => $line)
+    	if(count(self::$_options) === 0)
     	{
-    		if(trim($line) === '')
-    			continue;
-    		list($name, $url) = explode(':', $line);
-    		$array[trim($name)] = trim($url);
+    		$confFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'suggestions.conf';
+	    	if(file_exists($confFile))
+	    	{
+	    		$array = array();
+		    	$lines = file($confFile);
+		    	foreach($lines as $lineNo => $line)
+		    	{
+		    		if(trim($line) === '')
+		    			continue;
+		    		list($name, $url) = explode(':', $line, 2);
+		    		$array[trim($name)] = trim($url);
+		    	}
+		    	self::$_options = $array;
+	    	}
     	}
-    	return $array;
+    	return self::$_options;
     }
 }
