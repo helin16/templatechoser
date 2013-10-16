@@ -27,9 +27,18 @@ abstract class TemplateSelector
     
     private static function _getOptions()
     {
-        return array(
-        	'ClothesStore' => 'http://livedemo00.template-help.com/magento_41217/',
-        	'HairStore' => 'http://livedemo00.template-help.com/magento_46552/'
-        );
+    	$confFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'suggestion.conf';
+    	if(!file_exists($confFile))
+    		return array();
+    	$array = array();
+    	$lines = file($confFile);
+    	foreach($lines as $lineNo => $line)
+    	{
+    		if(trim($line) === '')
+    			continue;
+    		list($name, $url) = explode(':', $line);
+    		$array[trim($name)] = trim($url);
+    	}
+    	return $array();
     }
 }
