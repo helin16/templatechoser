@@ -38,7 +38,7 @@ abstract class TemplateSelector
 		    	$lines = file($confFile);
 		    	foreach($lines as $lineNo => $line)
 		    	{
-		    		if(trim($line) === '')
+		    		if(trim($line) === '' || substr(trim($line), 0, 1) === '#')
 		    			continue;
 		    		list($name, $url) = explode(':', $line, 2);
 		    		$array[trim($name)] = trim($url);
