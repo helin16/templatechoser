@@ -29,7 +29,7 @@
         		<div class="bg">
         			<div class="top_container container">
         				<div class="name_template">
-        					<?php echo TemplateSelector::genSelectDiv();?>
+        					<?php echo TemplateSelector::genSelectDiv(isset($_REQUEST['tname']) ? $_REQUEST['tname'] : null);?>
         				</div>
         			</div>
         		</div>
