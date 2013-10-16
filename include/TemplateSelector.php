@@ -3,12 +3,31 @@ abstract class TemplateSelector
 {
     public static function genSelectDiv()
     {
-        $html = '<div class="templateSelector">';
+        $html = '<span class="templateSelector">';
             $html .= 'There are a couple of templates(how you website will looks like), that we think will suites you:';
-            $html .= '<select>';
-                $html .= '<option value="test">test</option>';
+            $html .= '<select onchange="window.location = ' . "'" . $_SERVER['PHP_SELF'] . '?tname=' . "' + $(this).val();" . '">';
+                $html .= '<option value="">Please Select</option>';
+                foreach(self::_getOptions() as $key => $url)
+                {
+                    $html .= '<option value="' . $key . '">' . $key . '</option>';
+                }
             $html .= '</select>';
-        $html .= '<div>';
+        $html .= '</span>';
         return $html;
+    }
+    
+    public static function getSelectedUrl($name)
+    {
+        $options = self::_getOptions();
+        if (($name = trim($name)) === '' || !isset($options[$name]))
+            return 'welcome.php';
+        return $options[$name];
+    }
+    
+    private static function _getOptions()
+    {
+        return array(
+        	'HairStore' => 'http://livedemo00.template-help.com/magento_46552/'
+        );
     }
 }
