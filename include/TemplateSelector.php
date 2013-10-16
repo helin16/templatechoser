@@ -39,6 +39,6 @@ abstract class TemplateSelector
     		list($name, $url) = explode(':', $line);
     		$array[trim($name)] = trim($url);
     	}
-    	return $array();
+    	return $array;
     }
 }
