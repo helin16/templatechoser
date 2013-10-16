@@ -27,7 +27,7 @@ abstract class TemplateSelector
     
     private static function _getOptions()
     {
-    	$confFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'suggestion.conf';
+    	$confFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'suggestions.conf';
     	if(!file_exists($confFile))
     		return array();
     	$array = array();
